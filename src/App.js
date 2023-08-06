@@ -13,7 +13,7 @@ import { Box } from "./utils/Box";
 export const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-export const KEY = "f0e5fc51";
+export const KEY = "e8aa8854266962110e77b7545569710c";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -75,17 +75,20 @@ export default function App() {
         setError("");
         try {
           const response = await fetch(
-            `https://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=${query}`
+            `https://api.themoviedb.org/3/search/movie?api_key=${KEY}&query=${encodeURIComponent(
+              query
+            )}`
           );
 
           if (!response.ok)
             throw new Error("Something went wrong with fetching movies");
 
           const data = await response.json();
+          console.log(data);
 
-          if (!data.Search) throw new Error("Movie not found");
+          if (!data.results?.length) throw new Error("Movie not found");
 
-          setMovies(data.Search);
+          setMovies(data.results);
         } catch (error) {
           console.error(error.message);
           setError(error.message);

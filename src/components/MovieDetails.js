@@ -19,17 +19,22 @@ export function MovieDetails({
   )?.userRating;
 
   const {
-    Title: title,
+    original_title: title,
     Year: year,
-    Poster: poster,
-    Runtime: runtime,
-    imdbRating,
+    poster_path: posterPath,
+    runtime,
+    vote_average: imdbRating,
     Plot: plot,
-    Released: released,
+    release_date: released,
     Actors: actors,
     Director: director,
     Genre: genre,
   } = movie;
+
+  const getPosterUrl = (posterPath, size = "w500") =>
+    `https://www.themoviedb.org/t/p/${size}${posterPath}`;
+
+  const poster = getPosterUrl(posterPath);
 
   function handleAdd() {
     const newMovie = {
@@ -39,7 +44,7 @@ export function MovieDetails({
       poster,
       imdbRating: Number(imdbRating),
       userRating,
-      runtime: Number(runtime.split(" ").at(0)),
+      runtime: runtime,
     };
 
     onAddWatched(newMovie);
@@ -52,10 +57,11 @@ export function MovieDetails({
         try {
           setIsLoading(true);
           const response = await fetch(
-            `https://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
+            `https://api.themoviedb.org/3/movie/${selectedId}?api_key=${KEY}`
           );
 
           const data = await response.json();
+          console.log(data);
 
           setMovie(data);
           setIsLoading(false);
@@ -83,7 +89,7 @@ export function MovieDetails({
             <div className="details-overview">
               <h2>{title}</h2>
               <p>
-                {released} &bull; {runtime}
+                {released} &bull; {runtime} min
               </p>
               <p>{genre}</p>
               <p>

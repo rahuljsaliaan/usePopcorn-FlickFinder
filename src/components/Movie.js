@@ -1,8 +1,16 @@
 export function Movie({ movie, onSelectMovie }) {
+  const getPosterUrl = (posterPath, size = "w500") =>
+    `https://www.themoviedb.org/t/p/${size}${posterPath}`;
+
+  const poster = getPosterUrl(movie.poster_path);
+
   return (
-    <li onClick={() => onSelectMovie(movie.imdbID)} key={movie.imdbID}>
-      <img src={movie.Poster} alt={`${movie.Title} poster`} />
-      <h3>{movie.Title}</h3>
+    <li onClick={() => onSelectMovie(movie.id)} key={movie.id}>
+      <img
+        src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2${poster}`}
+        alt={`${movie.original_title} poster`}
+      />
+      <h3>{movie.original_title}</h3>
       <div>
         <p>
           <span>🗓</span>
