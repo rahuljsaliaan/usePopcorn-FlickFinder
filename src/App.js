@@ -75,7 +75,7 @@ export default function App() {
         setError("");
         try {
           const response = await fetch(
-            `http://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=${query}`
+            `https://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=${query}`
           );
 
           if (!response.ok)
