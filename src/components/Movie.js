@@ -8,9 +8,9 @@ export function Movie({ movie, onSelectMovie }) {
     <li onClick={() => onSelectMovie(movie.id)} key={movie.id}>
       <img
         src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2${poster}`}
-        alt={`${movie.original_title} poster`}
+        alt={`${movie.title} poster`}
       />
-      <h3>{movie.original_title}</h3>
+      <h3>{movie.title}</h3>
       <div>
         <p>
           <span>🗓</span>

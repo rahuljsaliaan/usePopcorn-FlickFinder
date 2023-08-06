@@ -19,7 +19,7 @@ export function MovieDetails({
   )?.userRating;
 
   const {
-    original_title: title,
+    title,
     Year: year,
     poster_path: posterPath,
     runtime,
@@ -28,7 +28,7 @@ export function MovieDetails({
     release_date: released,
     Actors: actors,
     Director: director,
-    Genre: genre,
+    genres,
   } = movie;
 
   const getPosterUrl = (posterPath, size = "w500") =>
@@ -91,7 +91,9 @@ export function MovieDetails({
               <p>
                 {released} &bull; {runtime} min
               </p>
-              <p>{genre}</p>
+              <p>
+                {genres && genres.map((genre) => <>{genre?.name} &nbsp;</>)}
+              </p>
               <p>
                 <span>⭐</span>
                 {imdbRating} IMDB rating
