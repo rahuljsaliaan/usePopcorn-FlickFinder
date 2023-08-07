@@ -52,11 +52,14 @@ export function MovieDetails({
 
   useEffect(
     function () {
+      const controller = new AbortController();
+
       async function getMovieDetails() {
         try {
           setIsLoading(true);
           const response = await fetch(
-            `https://api.themoviedb.org/3/movie/${selectedId}?api_key=${KEY}`
+            `https://api.themoviedb.org/3/movie/${selectedId}?api_key=${KEY}`,
+            { signal: controller.signal }
           );
 
           const data = await response.json();
@@ -69,13 +72,30 @@ export function MovieDetails({
       }
 
       getMovieDetails();
+
+      return function () {
+        controller.abort();
+      };
     },
     [selectedId]
   );
 
   useEffect(() => {
     document.body.style.backgroundImage = `url(${backdrop})`;
+
+    return function () {
+      document.body.style.backgroundImage = "none";
+    };
   }, [backdrop]);
+
+  useEffect(() => {
+    if (!title) return;
+    document.title = `Movie | ${title}`;
+
+    return function () {
+      document.title = "usePopcorn-FlickFinder";
+    };
+  }, [title]);
 
   return (
     <div className="details">

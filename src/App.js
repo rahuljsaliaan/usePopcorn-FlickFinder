@@ -69,6 +69,8 @@ export default function App() {
       //   .then((response) => response.json())
       //   .then((data) => setMovies(data.Search));
 
+      const controller = new AbortController();
+
       async function fetchMovie() {
         setIsLoading(true);
         setError("");
@@ -76,7 +78,8 @@ export default function App() {
           const response = await fetch(
             `https://api.themoviedb.org/3/search/movie?api_key=${KEY}&query=${encodeURIComponent(
               query
-            )}`
+            )}`,
+            { signal: controller.signal }
           );
 
           if (!response.ok)
@@ -87,9 +90,11 @@ export default function App() {
           if (!data.results?.length) throw new Error("Movie not found");
 
           setMovies(data.results);
+          setError("");
         } catch (error) {
           console.error(error.message);
-          setError(error.message);
+
+          if (error.name !== "AbortError") setError(error.message);
         } finally {
           setIsLoading(false);
         }
@@ -102,13 +107,14 @@ export default function App() {
       }
 
       fetchMovie();
+
+      return function () {
+        controller.abort();
+        console.log("abort");
+      };
     },
     [query]
   );
-
-  useEffect(() => {
-    if (!selectedId) document.body.style.backgroundImage = "none";
-  }, [selectedId]);
 
   return (
     <>
@@ -119,9 +125,9 @@ export default function App() {
       <Main>
         <Box>
           {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
-          {!movies.length && (
+          {!movies.length && !error && !isLoading && (
             <Message>
-              <h3 style={{ fontSize: "3rem" }}>
+              <h3 style={{ fontSize: "2rem" }}>
                 <em>
                   Simply type the movie's title in the search box above, and
                   we'll do the rest. 🍿
@@ -130,7 +136,7 @@ export default function App() {
             </Message>
           )}
           {isLoading && <Loader />}
-          {!isLoading && (
+          {movies.length > 0 && (
             <MovieList movies={movies} onSelectMovie={handleSelectedMovie} />
           )}
           {error && !movies?.length && <ErrorMessage message={error} />}
@@ -148,7 +154,7 @@ export default function App() {
               <WatchedSummary watched={watched} />
               {!watched.length ? (
                 <Message>
-                  <h3 style={{ fontSize: "3rem" }}>
+                  <h3 style={{ fontSize: "2rem" }}>
                     <em>
                       You haven't watched any movies yet. Start watching now! 🎬
                     </em>
