@@ -23,27 +23,6 @@ export default function App() {
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  // NOTE: Effects only runs after the browser paint
-  /*
-  useEffect(function () {
-    // runs after initial render
-    console.log("A");
-  }, []);
-
-  useEffect(function () {
-    // runs after each render and re-render
-    console.log("B");
-  });
-
-  useEffect(
-    function () {
-      // runs after there is a change in the query state (dependency)
-      console.log("D");
-    },
-    [query]
-  );
-  console.log("C");
-*/
 
   function handleSelectedMovie(movieId) {
     setSelectedId((selectedId) => (movieId === selectedId ? null : movieId));
