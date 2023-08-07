@@ -22,6 +22,7 @@ export function MovieDetails({
     title,
     Year: year,
     poster_path: posterPath,
+    backdrop_path: backdropPath,
     runtime,
     vote_average: imdbRating,
     Plot: plot,
@@ -35,6 +36,7 @@ export function MovieDetails({
     `https://www.themoviedb.org/t/p/${size}${posterPath}`;
 
   const poster = getPosterUrl(posterPath);
+  const backdrop = getPosterUrl(backdropPath, "w1280");
 
   function handleAdd() {
     const newMovie = {
@@ -44,7 +46,8 @@ export function MovieDetails({
       poster,
       imdbRating: Number(imdbRating),
       userRating,
-      runtime: runtime,
+      runtime,
+      backdrop,
     };
 
     onAddWatched(newMovie);
@@ -75,6 +78,10 @@ export function MovieDetails({
     [selectedId]
   );
 
+  useEffect(() => {
+    document.body.style.backgroundImage = `url(${backdrop})`;
+  }, [backdrop]);
+
   return (
     <div className="details">
       {isLoading ? (
@@ -91,9 +98,10 @@ export function MovieDetails({
               <p>
                 {released} &bull; {runtime} min
               </p>
-              <p>
-                {genres && genres.map((genre) => <>{genre?.name} &nbsp;</>)}
-              </p>
+              <ul className="genre-list">
+                {genres &&
+                  genres.map((genre) => <li key={genre?.id}>{genre?.name}</li>)}
+              </ul>
               <p>
                 <span>⭐</span>
                 {imdbRating} IMDB rating

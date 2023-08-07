@@ -9,6 +9,7 @@ import { NavBar } from "./components/NavBar";
 import { Search } from "./components/Search";
 import { NumResults } from "./utils/NumResults";
 import { Box } from "./utils/Box";
+import { Message } from "./utils/Message";
 
 export const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -107,6 +108,10 @@ export default function App() {
     },
     [query]
   );
+
+  useEffect(() => {
+    if (!selectedId) document.body.style.backgroundImage = "none";
+  }, [selectedId]);
 
   return (
     <>

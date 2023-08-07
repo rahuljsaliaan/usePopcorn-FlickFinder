@@ -20,12 +20,30 @@ html {
   font-size: 62.5%;
 }
 
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Adjust the alpha (opacity) value for the desired shade */
+  backdrop-filter: blur(10px);
+  /* Apply a blur effect to the background */
+  z-index: -1;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 
   color: var(--color-text);
   background-color: var(--color-background-900);
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(10px);
+
   padding: 2.4rem;
 }
 
@@ -50,9 +68,10 @@ body {
 }
 
 .box {
-  width: 42rem;
-  max-width: 42rem;
-  background-color: var(--color-background-500);
+  width: 50%;
+  max-width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
   border-radius: 0.9rem;
   overflow-y: scroll;
   position: relative;
@@ -139,6 +158,8 @@ body {
   list-style: none;
   padding: 0.8rem 0;
   overflow-y: scroll;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .list-watched {
@@ -148,14 +169,11 @@ body {
 .list li {
   position: relative;
   display: grid;
-  grid-template-columns: 4rem 1fr;
-  grid-template-rows: auto auto;
-  column-gap: 2.4rem;
+  /* grid-template-rows: 1fr 3fr; */
+  column-gap: 1.4rem;
   font-size: 1.6rem;
   align-items: center;
-
   padding: 1.6rem 3.2rem;
-  border-bottom: 1px solid var(--color-background-100);
 }
 
 .list.list-movies li {
@@ -337,6 +355,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.genre-list {
+  display: flex;
+  justify-content: left;
+  gap: .5rem;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+
+.genre-list li {
+  background-color: var(--color-background-900);
+  padding: .25em .5em;
+  border-radius: 5px;
 }
 
 /*
