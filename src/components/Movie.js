@@ -1,20 +1,16 @@
-export function Movie({ movie, onSelectMovie }) {
-  const getPosterUrl = (posterPath, size = "w500") =>
-    `https://www.themoviedb.org/t/p/${size}${posterPath}`;
+import { getImageUrl } from "../services/utilityServices";
 
-  const poster = getPosterUrl(movie.poster_path);
+export function Movie({ movie, onSelectMovie }) {
+  const poster = getImageUrl(movie.poster_path);
 
   return (
     <li onClick={() => onSelectMovie(movie.id)} key={movie.id}>
-      <img
-        src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2${poster}`}
-        alt={`${movie.title} poster`}
-      />
+      <img src={poster} alt={`${movie.title} poster`} />
       <h3>{movie.title}</h3>
       <div>
         <p>
           <span>🗓</span>
-          <span>{movie.Year}</span>
+          <span>{movie.release_date}</span>
         </p>
       </div>
     </li>

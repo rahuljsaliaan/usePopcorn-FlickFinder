@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import StarRating from "../utils/StarRating";
 import { KEY } from "../App";
 import { Loader } from "../utils/Loader";
+import { getImageUrl } from "../services/utilityServices";
 
 export function MovieDetails({
   selectedId,
@@ -25,18 +26,13 @@ export function MovieDetails({
     backdrop_path: backdropPath,
     runtime,
     vote_average: imdbRating,
-    Plot: plot,
     release_date: released,
-    Actors: actors,
-    Director: director,
     genres,
+    overview,
   } = movie;
 
-  const getPosterUrl = (posterPath, size = "w500") =>
-    `https://www.themoviedb.org/t/p/${size}${posterPath}`;
-
-  const poster = getPosterUrl(posterPath);
-  const backdrop = getPosterUrl(backdropPath, "w1280");
+  const poster = getImageUrl(posterPath);
+  const backdrop = getImageUrl(backdropPath, "w1280");
 
   function handleAdd() {
     const newMovie = {
@@ -64,7 +60,6 @@ export function MovieDetails({
           );
 
           const data = await response.json();
-          console.log(data);
 
           setMovie(data);
           setIsLoading(false);
@@ -102,6 +97,7 @@ export function MovieDetails({
                 {genres &&
                   genres.map((genre) => <li key={genre?.id}>{genre?.name}</li>)}
               </ul>
+              <p>{overview}</p>
               <p>
                 <span>⭐</span>
                 {imdbRating} IMDB rating
@@ -113,9 +109,13 @@ export function MovieDetails({
             <div className="rating">
               {!isWatched ? (
                 <>
+                  <p>
+                    Love it or not, your rating counts! Give your star rating
+                    for this movie now! 🙂{" "}
+                  </p>
                   <StarRating
                     maxRating={10}
-                    size={24}
+                    size={35}
                     onSetRating={setUserRating}
                   />
 
@@ -126,14 +126,20 @@ export function MovieDetails({
                   )}
                 </>
               ) : (
-                <p>You rated this movie {watchedUserRating}</p>
+                <>
+                  <p>You rated this movie 🍿</p>
+                  {
+                    <StarRating
+                      maxRating={watchedUserRating}
+                      defaultRating={watchedUserRating}
+                      size={35}
+                      className="pointer-none"
+                      messages={`You rated this movie ${watchedUserRating}`}
+                    />
+                  }
+                </>
               )}
             </div>
-            <p>
-              <em>{plot}</em>
-              <p>Starring: {actors}</p>
-              <p>Directed by: {director}</p>
-            </p>
           </section>
         </>
       )}

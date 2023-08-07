@@ -23,7 +23,6 @@ export default function App() {
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-
   // NOTE: Effects only runs after the browser paint
   /*
   useEffect(function () {
@@ -56,7 +55,6 @@ export default function App() {
 
   function handleAddWatched(movie) {
     setWatched((watched) => [...watched, movie]);
-    console.log(watched);
   }
 
   function handleDeleteWatched(movieId) {
@@ -85,7 +83,6 @@ export default function App() {
             throw new Error("Something went wrong with fetching movies");
 
           const data = await response.json();
-          console.log(data);
 
           if (!data.results?.length) throw new Error("Movie not found");
 
@@ -122,6 +119,16 @@ export default function App() {
       <Main>
         <Box>
           {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
+          {!movies.length && (
+            <Message>
+              <h3 style={{ fontSize: "3rem" }}>
+                <em>
+                  Simply type the movie's title in the search box above, and
+                  we'll do the rest. 🍿
+                </em>
+              </h3>
+            </Message>
+          )}
           {isLoading && <Loader />}
           {!isLoading && (
             <MovieList movies={movies} onSelectMovie={handleSelectedMovie} />
@@ -139,10 +146,20 @@ export default function App() {
           ) : (
             <>
               <WatchedSummary watched={watched} />
-              <WatchedMovieList
-                watched={watched}
-                onDeleteWatched={handleDeleteWatched}
-              />
+              {!watched.length ? (
+                <Message>
+                  <h3 style={{ fontSize: "3rem" }}>
+                    <em>
+                      You haven't watched any movies yet. Start watching now! 🎬
+                    </em>
+                  </h3>
+                </Message>
+              ) : (
+                <WatchedMovieList
+                  watched={watched}
+                  onDeleteWatched={handleDeleteWatched}
+                />
+              )}
             </>
           )}
         </Box>
