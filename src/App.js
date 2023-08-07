@@ -44,10 +44,6 @@ export default function App() {
 
   useEffect(
     function () {
-      // fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=interstellar`)
-      //   .then((response) => response.json())
-      //   .then((data) => setMovies(data.Search));
-
       const controller = new AbortController();
 
       async function fetchMovie() {
@@ -104,7 +100,6 @@ export default function App() {
       </NavBar>
       <Main>
         <Box>
-          {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
           {!movies.length && !error && !isLoading && (
             <Message>
               <h3 style={{ fontSize: "2rem" }}>
@@ -155,7 +150,6 @@ export default function App() {
   );
 }
 
-// * Main Component
 function Main({ children }) {
   return <main className="main">{children}</main>;
 }

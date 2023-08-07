@@ -1,4 +1,3 @@
-// * ErrorMessage Component
 export function ErrorMessage({ message }) {
   return (
     <p className="error">

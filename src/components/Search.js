@@ -1,4 +1,3 @@
-// * Search component
 export function Search({ query, setQuery }) {
   return (
     <input

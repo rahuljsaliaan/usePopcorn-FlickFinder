@@ -1,4 +1,3 @@
-// * NumResults Component
 export function NumResults({ movies }) {
   return (
     <p className="num-results">

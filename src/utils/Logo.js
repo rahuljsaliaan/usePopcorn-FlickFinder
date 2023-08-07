@@ -1,5 +1,3 @@
-// * Logo Component
-
 export function Logo() {
   return (
     <div className="logo">
