@@ -97,6 +97,21 @@ export function MovieDetails({
     };
   }, [title]);
 
+  useEffect(
+    function () {
+      function callBack(e) {
+        e.code === "Escape" && onCloseMovie();
+      }
+
+      document.addEventListener("keyup", callBack);
+
+      return function () {
+        document.removeEventListener("keyup", callBack);
+      };
+    },
+    [onCloseMovie]
+  );
+
   return (
     <div className="details">
       {isLoading ? (
