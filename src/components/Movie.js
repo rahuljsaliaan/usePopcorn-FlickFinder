@@ -1,10 +1,14 @@
 import { getImageUrl } from "../services/utilityServices";
 
-export function Movie({ movie, onSelectMovie }) {
+export function Movie({ movie, selectedId, onSelectMovie }) {
   const poster = getImageUrl(movie.poster_path);
 
   return (
-    <li onClick={() => onSelectMovie(movie.id)} key={movie.id}>
+    <li
+      className={selectedId === movie.id ? "selected" : ""}
+      onClick={() => onSelectMovie(movie.id)}
+      key={movie.id}
+    >
       <img src={poster} alt={`${movie.title} poster`} />
       <h3>{movie.title}</h3>
       <div>

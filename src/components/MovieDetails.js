@@ -113,7 +113,7 @@ export function MovieDetails({
   );
 
   return (
-    <div className="details">
+    <div className="details fade-in">
       {isLoading ? (
         <Loader />
       ) : (

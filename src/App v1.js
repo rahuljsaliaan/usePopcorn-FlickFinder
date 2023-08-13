@@ -112,11 +112,7 @@ export default function App() {
           )}
           {isLoading && <Loader />}
           {movies.length > 0 && (
-            <MovieList
-              movies={movies}
-              selectedId={selectedId}
-              onSelectMovie={handleSelectedMovie}
-            />
+            <MovieList movies={movies} onSelectMovie={handleSelectedMovie} />
           )}
           {error && !movies?.length && <ErrorMessage message={error} />}
         </Box>
