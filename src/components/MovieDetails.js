@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "../utils/StarRating";
 import { KEY } from "../App";
 import { Loader } from "../utils/Loader";
@@ -13,6 +13,12 @@ export function MovieDetails({
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState(0);
+
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    if (userRating) countRef.current++;
+  }, [userRating]);
 
   const isWatched = watched.map((movie) => movie.imdbId).includes(selectedId);
   const watchedUserRating = watched.find(
@@ -44,6 +50,7 @@ export function MovieDetails({
       userRating,
       runtime,
       backdrop,
+      countRatingDecisions: countRef.current,
     };
 
     onAddWatched(newMovie);
@@ -52,14 +59,11 @@ export function MovieDetails({
 
   useEffect(
     function () {
-      const controller = new AbortController();
-
       async function getMovieDetails() {
         try {
           setIsLoading(true);
           const response = await fetch(
-            `https://api.themoviedb.org/3/movie/${selectedId}?api_key=${KEY}`,
-            { signal: controller.signal }
+            `https://api.themoviedb.org/3/movie/${selectedId}?api_key=${KEY}`
           );
 
           const data = await response.json();
@@ -72,10 +76,6 @@ export function MovieDetails({
       }
 
       getMovieDetails();
-
-      return function () {
-        controller.abort();
-      };
     },
     [selectedId]
   );

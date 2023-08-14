@@ -84,18 +84,18 @@ export default function App() {
         }
       }
 
+      handleCloseMovie();
+
       if (query.length < 3) {
         setMovies([]);
         setError("");
         return;
       }
 
-      handleCloseMovie();
       fetchMovie();
 
       return function () {
         controller.abort();
-        console.log("abort");
       };
     },
     [query]

@@ -121,6 +121,7 @@ export default function App() {
             <MovieDetails
               key={selectedId}
               selectedId={selectedId}
+              onRemoveSelectedMovie={setSelectedId}
               onCloseMovie={handleCloseMovie}
               watched={watched}
               onAddWatched={handleAddWatched}
