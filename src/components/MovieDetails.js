@@ -14,9 +14,9 @@ export function MovieDetails({
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState(0);
 
-  const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
+  const isWatched = watched.map((movie) => movie.imdbId).includes(selectedId);
   const watchedUserRating = watched.find(
-    (movie) => movie.imdbID === selectedId
+    (movie) => movie.imdbId === selectedId
   )?.userRating;
 
   const {
@@ -36,7 +36,7 @@ export function MovieDetails({
 
   function handleAdd() {
     const newMovie = {
-      imdbID: selectedId,
+      imdbId: selectedId,
       title,
       year,
       poster,

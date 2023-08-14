@@ -1,11 +1,11 @@
 export function WatchedMovie({ movie, onDeleteWatched }) {
   return (
-    <li key={movie.imdbID}>
+    <li>
       <img src={movie.poster} alt={`${movie.Title} poster`} />
       <h3>{movie.title}</h3>
       <button
         className="btn-delete"
-        onClick={() => onDeleteWatched(movie.imdbID)}
+        onClick={() => onDeleteWatched(movie.imdbId)}
       >
         X
       </button>
