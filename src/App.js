@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { WatchedMovieList } from "./components/WatchedMovieList";
 import { WatchedSummary } from "./components/WatchedSummary";
 import { MovieList } from "./components/MovieList";
@@ -10,6 +10,7 @@ import { Search } from "./components/Search";
 import { NumResults } from "./utils/NumResults";
 import { Box } from "./utils/Box";
 import { Message } from "./utils/Message";
+import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
 export const average = (arr) =>
   arr.reduce((acc, cur, _, arr) => acc + cur / arr.length, 0);
@@ -17,14 +18,12 @@ export const average = (arr) =>
 export const KEY = "e8aa8854266962110e77b7545569710c";
 
 export default function App() {
+  const [query, setQuery] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
+  const [watched, setWatched] = useLocalStorageState([], "watched");
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [query, setQuery] = useState("");
-  const [selectedId, setSelectedId] = useState(null);
-  const [watched, setWatched] = useState(
-    () => JSON.parse(localStorage.getItem("watched")) || []
-  );
 
   function handleSelectedMovie(movieId) {
     setSelectedId((selectedId) => (movieId === selectedId ? null : movieId));
@@ -43,13 +42,6 @@ export default function App() {
       watched.filter((movie) => movie.imdbId !== movieId)
     );
   }
-
-  useEffect(
-    function () {
-      localStorage.setItem("watched", JSON.stringify(watched));
-    },
-    [watched]
-  );
 
   useEffect(
     function () {
@@ -76,8 +68,6 @@ export default function App() {
           setMovies(data.results);
           setError("");
         } catch (error) {
-          console.error(error.message);
-
           if (error.name !== "AbortError") setError(error.message);
         } finally {
           setIsLoading(false);

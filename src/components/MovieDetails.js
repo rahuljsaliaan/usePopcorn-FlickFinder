@@ -3,6 +3,7 @@ import StarRating from "../utils/StarRating";
 import { KEY } from "../App";
 import { Loader } from "../utils/Loader";
 import { getImageUrl } from "../services/utilityServices";
+import { useKey } from "../hooks/useKey";
 
 export function MovieDetails({
   selectedId,
@@ -13,6 +14,8 @@ export function MovieDetails({
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState(0);
+
+  useKey("Escape", onCloseMovie);
 
   const countRef = useRef(0);
 
@@ -70,9 +73,7 @@ export function MovieDetails({
 
           setMovie(data);
           setIsLoading(false);
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
       }
 
       getMovieDetails();
@@ -96,21 +97,6 @@ export function MovieDetails({
       document.title = "usePopcorn-FlickFinder";
     };
   }, [title]);
-
-  useEffect(
-    function () {
-      function callBack(e) {
-        e.code === "Escape" && onCloseMovie();
-      }
-
-      document.addEventListener("keyup", callBack);
-
-      return function () {
-        document.removeEventListener("keyup", callBack);
-      };
-    },
-    [onCloseMovie]
-  );
 
   return (
     <div className="details fade-in">
