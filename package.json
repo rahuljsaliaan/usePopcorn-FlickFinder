@@ -1,22 +1,15 @@
 {
   "name": "usePopcorn-FlickFinder",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1",
-    "web-vitals": "^2.1.4"
-  },
+  "version": "1.0.0",
+  "description": "Discover your favorite movies and explore a world of cinematic wonders with usePopcorn. Easily search for films, access detailed information, and rate your movie experiences and add it to the watched list. It's your ticket to an immersive movie journey!",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "author": "Rahul J",
+  "license": "MIT",
   "eslintConfig": {
     "extends": [
       "react-app",
