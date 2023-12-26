@@ -103,8 +103,8 @@ export default function App() {
             <Message>
               <h3 style={{ fontSize: "2rem" }}>
                 <em>
-                  Simply type the movie's title in the search box above, and
-                  we'll do the rest. 🍿
+                  Simply type the movie&apos;s title in the search box above,
+                  and we&apos;ll do the rest. 🍿
                 </em>
               </h3>
             </Message>
@@ -135,7 +135,8 @@ export default function App() {
                 <Message>
                   <h3 style={{ fontSize: "2rem" }}>
                     <em>
-                      You haven't watched any movies yet. Start watching now! 🎬
+                      You haven&apos;t watched any movies yet. Start watching
+                      now! 🎬
                     </em>
                   </h3>
                 </Message>
@@ -153,6 +154,12 @@ export default function App() {
   );
 }
 
+import PropTypes from "prop-types";
+
 function Main({ children }) {
   return <main className="main">{children}</main>;
 }
+
+Main.propTypes = {
+  children: PropTypes.node.isRequired,
+};
