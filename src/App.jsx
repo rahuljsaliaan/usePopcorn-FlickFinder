@@ -14,7 +14,7 @@ import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
 export default function App() {
   const [query, setQuery] = useState("");
-  const debounceQuery = useDebounce();
+  const debounceQuery = useDebounce(query, 500);
   const [selectedId, setSelectedId] = useState(null);
   const [watched, setWatched] = useLocalStorageState([], "watched");
   const [movies, setMovies] = useState([]);

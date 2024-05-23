@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import StarRating from "../utils/StarRating";
-import { KEY } from "../App";
 import { Loader } from "../utils/Loader";
 import { getImageUrl } from "../services/utilityServices";
 import { useKey } from "../hooks/useKey";
+import { API_KEY } from "../constants/constants.js";
 
 export function MovieDetails({
   selectedId,
@@ -66,7 +66,7 @@ export function MovieDetails({
         try {
           setIsLoading(true);
           const response = await fetch(
-            `https://api.themoviedb.org/3/movie/${selectedId}?api_key=${KEY}`
+            `https://api.themoviedb.org/3/movie/${selectedId}?api_key=${API_KEY}`
           );
 
           const data = await response.json();
