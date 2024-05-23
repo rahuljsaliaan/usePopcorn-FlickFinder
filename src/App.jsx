@@ -12,13 +12,9 @@ import { Box } from "./utils/Box";
 import { Message } from "./utils/Message";
 import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
-export const average = (arr) =>
-  arr.reduce((acc, cur, _, arr) => acc + cur / arr.length, 0);
-
-export const KEY = "e8aa8854266962110e77b7545569710c";
-
 export default function App() {
   const [query, setQuery] = useState("");
+  const debounceQuery = useDebounce();
   const [selectedId, setSelectedId] = useState(null);
   const [watched, setWatched] = useLocalStorageState([], "watched");
   const [movies, setMovies] = useState([]);
@@ -52,8 +48,8 @@ export default function App() {
         setError("");
         try {
           const response = await fetch(
-            `https://api.themoviedb.org/3/search/movie?api_key=${KEY}&query=${encodeURIComponent(
-              query
+            `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
+              debounceQuery
             )}`,
             { signal: controller.signal }
           );
@@ -76,7 +72,7 @@ export default function App() {
 
       handleCloseMovie();
 
-      if (query.length < 3) {
+      if (debounceQuery.length < MIN_SEARCH_LENGTH) {
         setMovies([]);
         setError("");
         return;
@@ -88,7 +84,7 @@ export default function App() {
         controller.abort();
       };
     },
-    [query]
+    [debounceQuery]
   );
 
   return (
@@ -155,6 +151,8 @@ export default function App() {
 }
 
 import PropTypes from "prop-types";
+import { API_KEY, MIN_SEARCH_LENGTH } from "./constants/constants";
+import { useDebounce } from "./hooks/useDebounce";
 
 function Main({ children }) {
   return <main className="main">{children}</main>;

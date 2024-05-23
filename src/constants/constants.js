@@ -1,0 +1,2 @@
+export const API_KEY = "e8aa8854266962110e77b7545569710c";
+export const MIN_SEARCH_LENGTH = 1;

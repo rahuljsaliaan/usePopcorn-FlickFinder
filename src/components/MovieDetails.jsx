@@ -73,7 +73,9 @@ export function MovieDetails({
 
           setMovie(data);
           setIsLoading(false);
-        } catch (error) {}
+        } catch (error) {
+          console.error(error.message);
+        }
       }
 
       getMovieDetails();
